@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentification Étudiant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-box {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 300px;
+            text-align: center;
+        }
+        h2 { margin-bottom: 20px; color: #333; }
+        input {
+            width: 100%; padding: 10px; margin-bottom: 15px;
+            border: 1px solid #ccc; border-radius: 4px;
+        }
+        button {
+            background-color: #007bff; color: white;
+            padding: 10px; border: none; border-radius: 4px;
+            cursor: pointer; font-size: 16px; width: 100%;
+        }
+        button:hover { background-color: #0056b3; }
+        .error { color: red; margin: 10px 0; font-weight: bold; }
+        .switch-link { margin-top: 15px; font-size: 14px; }
+        .switch-link a { color: #007bff; text-decoration: none; cursor: pointer; }
+        #mfa-instruction-debug {
+            font-weight: bold; color: darkred; border: 1px dashed darkred;
+            padding: 10px; margin-bottom: 15px; background-color: #ffeaea; border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="login-box">
+    <h2 id="view-title">Connexion</h2>
+    <p class="error" id="errorMsg"></p>
+
+    <div id="login-view">
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Nom d'utilisateur" required>
+            <input type="password" id="loginPassword" placeholder="Mot de passe" required>
+            <button type="submit">Se connecter</button>
+        </form>
+        <p class="switch-link">Pas encore de compte ? <a href="#" onclick="showView('register-view')">S'inscrire</a></p>
+    </div>
+
+    <div id="register-view" style="display:none;">
+        <form id="registerForm">
+            <input type="text" id="regUsername" placeholder="Nom d'utilisateur" required>
+            <input type="email" id="regEmail" placeholder="Email" required>
+            <input type="password" id="regPassword" placeholder="Mot de passe (min 4 caractères)" required>
+            <button type="submit">S'inscrire</button>
+        </form>
+        <p class="switch-link">Déjà un compte ? <a href="#" onclick="showView('login-view')">Se connecter</a></p>
+    </div>
+
+    <div id="mfa-view" style="display:none;">
+        <p>Un code à 4 chiffres a été 'envoyé' à votre email.</p>
+        <p id="mfa-instruction-debug">CODE 2FA (DEBUG) : ****</p>
+        <form id="mfaForm">
+            <input type="text" id="mfaCode" placeholder="Code 2FA (4 chiffres)" maxlength="4" required>
+            <button type="submit">Vérifier le code</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    let currentLogin = { username: null, code: null };
+
+    function getUsers() { return JSON.parse(localStorage.getItem('studentUsers')) || {}; }
+    function saveUsers(users) { localStorage.setItem('studentUsers', JSON.stringify(users)); }
+
+    function showView(viewId) {
+        ["login-view","register-view","mfa-view"].forEach(v=>document.getElementById(v).style.display="none");
+        document.getElementById(viewId).style.display = "block";
+        document.getElementById("errorMsg").textContent = "";
+        document.getElementById("view-title").textContent =
+            viewId === "login-view" ? "Connexion" :
+            viewId === "register-view" ? "Inscription" : "Double Authentification";
+    }
+
+    // Inscription (classe fixée à Seconde)
+    document.getElementById("registerForm").addEventListener("submit", e=>{
+        e.preventDefault();
+        const username=document.getElementById("regUsername").value.trim();
+        const email=document.getElementById("regEmail").value.trim();
+        const password=document.getElementById("regPassword").value;
+        const users=getUsers();
+        if(password.length<4){document.getElementById("errorMsg").textContent="Mot de passe trop court.";return;}
+        if(users[username]){document.getElementById("errorMsg").textContent="Nom déjà pris.";return;}
+        // 🔒 Classe fixée automatiquement
+        users[username]={password,email,class:"Seconde"};
+        saveUsers(users);
+        document.getElementById("errorMsg").style.color="green";
+        document.getElementById("errorMsg").textContent="Inscription réussie !";
+        document.getElementById("registerForm").reset();
+        showView("login-view");
+    });
+
+    // Connexion
+    document.getElementById("loginForm").addEventListener("submit", e=>{
+        e.preventDefault();
+        const username=document.getElementById("loginUsername").value.trim();
+        const password=document.getElementById("loginPassword").value;
+        const user=getUsers()[username];
+        if(user && user.password===password){
+            const code=String(Math.floor(1000+Math.random()*9000));
+            currentLogin={username,code};
+            console.log("Code 2FA:",code);
+            document.getElementById("mfa-instruction-debug").textContent=`CODE 2FA (DEBUG) : ${code}`;
+            showView("mfa-view");
+        } else {
+            document.getElementById("errorMsg").textContent="Identifiants incorrects.";
+        }
+    });
+
+    // Vérification du code 2FA
+    document.getElementById("mfaForm").addEventListener("submit", e=>{
+        e.preventDefault();
+        if(document.getElementById("mfaCode").value.trim()===currentLogin.code){
+            localStorage.setItem("isLoggedIn","true");
+            localStorage.setItem("currentUser",currentLogin.username);
+            localStorage.setItem("studentClass","Seconde"); // 🔒 fixé pour les nouveaux inscrits, sera changé sur index.html
+            // REDIRECTION VERS L'ACCUEIL POUR CHOISIR LA CLASSE OU FILTRER LE MENU
+            window.location.replace("index.html"); 
+        } else {
+            document.getElementById("errorMsg").textContent="Code 2FA incorrect.";
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded",()=>showView("login-view"));
+</script>
+</body>
+</html>

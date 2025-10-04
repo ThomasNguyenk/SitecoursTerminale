@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCM Physique-Chimie - Terminale</title>
+
+<style>
+/* Reset & Base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    /* Nouveau fond basé sur l'esthétique fournie */
+    background: url('https://cdn-imgix.headout.com/media/images/e4a728601dae2c994a2a7bba52d35e74-harrypotterlondon-13.jpg') 
+                no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    padding: 20px; /* Pas de padding pour bandeau fixe */
+}
+
+.container { max-width: 1000px; margin: 0 auto; }
+
+/* Header */
+header {
+    text-align: center;
+    padding: 30px 20px;
+    margin-bottom: 30px;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    /* Nouveau gif d'entête */
+    background: url('https://media3.giphy.com/media/OZCZRFgOx9nGxd0XQf/giphy.gif') 
+                no-repeat center center;
+    background-size: cover;
+    border-radius: 10px;
+}
+h1 { font-size: 2.5rem; margin-bottom: 10px; }
+.subtitle { font-size: 1.2rem; opacity: 0.9; }
+
+/* Containers */
+.quiz-container, .leaderboard-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+.quiz-header, .leaderboard-header {
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+.quiz-body, .leaderboard-body { padding: 30px; }
+
+/* Questions */
+.question {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background: #f9f9f9;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+.question-number { font-weight: bold; color: #2575fc; margin-bottom: 10px; }
+.question-text { font-weight: bold; margin-bottom: 15px; color: #2c3e50; }
+.options { display: flex; flex-direction: column; gap: 12px; }
+.option { display: flex; align-items: center; gap: 12px; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+.option:hover { background: #edf7fd; border-color: #3498db; }
+.option input { cursor: pointer; transform: scale(1.2); }
+.option label { cursor: pointer; width: 100%; }
+/* Styles pour feedback visuel */
+.question.correct { border-left: 5px solid #27ae60; background: #e6ffe6; }
+.question.incorrect { border-left: 5px solid #e74c3c; background: #ffe6e6; }
+
+/* Buttons */
+.buttons { display: flex; justify-content: center; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
+.btn { padding: 12px 25px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; font-weight: 600; }
+.submit-btn { background: #3498db; color: white; }
+.submit-btn:hover { background: #2980b9; }
+.reset-btn { background: #e74c3c; color: white; }
+.reset-btn:hover { background: #c0392b; }
+.save-score-btn { background: #27ae60; color: white; }
+.save-score-btn:hover { background: #219653; }
+.show-leaderboard-btn { background: #8e44ad; color: white; }
+.show-leaderboard-btn:hover { background: #732d91; }
+
+/* Results */
+.results {
+    margin-top: 40px;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    display: none;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+}
+.score { font-size: 2rem; font-weight: bold; margin-bottom: 20px; }
+.score-details { font-size: 1.2rem; margin-bottom: 25px; }
+.message { font-size: 1.3rem; margin-bottom: 25px; padding: 15px; border-radius: 8px; }
+
+/* Leaderboard */
+.leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.leaderboard-table th, .leaderboard-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+.leaderboard-table th { background-color: #f8f9fa; font-weight: bold; }
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: white;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    border-radius: 10px;
+    /* Nouveau fond de footer */
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://i.pinimg.com/236x/5a/d8/77/5ad8779ec60744d790880a7f398f34cf.jpg') no-repeat center center;
+    background-size: cover;
+}
+</style>
+</head>
+<body>
+<script>
+    const LOGIN_PAGE = "Connexion étudiant.html";
+    
+    // 📌 CONFIGURATION SPÉCIFIQUE TERMINALE
+    const CURRENT_USER = localStorage.getItem("currentUser") || "Guest";
+    const CURRENT_CLASS = "Terminale"; // Classe fixée pour cette page
+    // Clé de stockage par classe pour un classement commun (et non personnel)
+    const SCORE_STORAGE_KEY = `quizScores_${CURRENT_CLASS}`; 
+
+    let currentScore = 0;
+    let totalQuestions = 20;
+    let quizAttempted = false; // Pour empêcher l'enregistrement multiple après une soumission.
+
+// =======================
+// 📌 FONCTIONS DE CLASSEMENT (DÉBOGUÉES)
+// =======================
+
+/**
+ * Récupère le tableau de classement du localStorage et le trie.
+ * @returns {Array} Le tableau des scores triés par score (décroissant), puis par date (croissant).
+ */
+function getLeaderboard() {
+    const scores = JSON.parse(localStorage.getItem(SCORE_STORAGE_KEY)) || [];
+    // Trier par score décroissant, puis par date croissante (le plus ancien en premier)
+    scores.sort((a, b) => {
+        if (b.score !== a.score) {
+            return b.score - a.score;
+        }
+        return new Date(a.date) - new Date(b.date);
+    });
+    return scores;
+}
+
+/**
+ * Enregistre le score actuel de l'utilisateur.
+ */
+function saveScore() {
+    if (!quizAttempted) {
+        alert("Veuillez d'abord soumettre vos réponses en cliquant sur 'Soumettre les réponses'.");
+        return;
+    }
+    
+    const saveButton = document.querySelector('.save-score-btn');
+    if (saveButton.disabled) {
+        alert("Votre score est déjà enregistré pour cette tentative.");
+        return;
+    }
+    
+    if (CURRENT_USER === "Guest" || !localStorage.getItem("isLoggedIn")) {
+        alert("Erreur: Vous devez être connecté pour enregistrer votre score.");
+        return;
+    }
+
+    const newScoreEntry = {
+        name: CURRENT_USER,
+        score: currentScore,
+        total: totalQuestions,
+        date: new Date().toISOString(), // Utilisation de ISO string pour un tri précis
+        comment: `Score: ${currentScore}/${totalQuestions}`
+    };
+
+    const scores = getLeaderboard();
+    scores.push(newScoreEntry);
+    localStorage.setItem(SCORE_STORAGE_KEY, JSON.stringify(scores));
+
+    alert(`Score (${currentScore}/${totalQuestions}) enregistré pour ${CURRENT_USER} dans le classement Terminale !`);
+    saveButton.disabled = true; // Désactiver pour la tentative actuelle
+    saveButton.textContent = "Score enregistré ✅";
+    
+    showLeaderboard(); // Afficher le classement après l'enregistrement
+}
+
+/**
+ * Affiche le tableau de classement.
+ */
+function showLeaderboard() {
+    document.getElementById("quiz-container").style.display = 'none';
+    document.getElementById("leaderboard-container").style.display = 'block';
+    
+    const scores = getLeaderboard();
+    const tbody = document.getElementById("leaderboard-body");
+    tbody.innerHTML = '';
+    
+    document.getElementById("leaderboard-title").textContent = `Classement Terminale (Joueur: ${CURRENT_USER})`;
+
+    if (scores.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Aucun score enregistré pour la classe Terminale.</td></tr>';
+        return;
+    }
+
+    scores.forEach((entry, index) => {
+        // Formater la date et l'heure
+        const dateObj = new Date(entry.date);
+        const date = dateObj.toLocaleDateString('fr-FR');
+        const time = dateObj.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+
+        tbody.innerHTML += `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${entry.name}</td>
+                <td>${entry.score}/${entry.total}</td>
+                <td>${date} à ${time}</td>
+                <td>${getComment(entry.score, entry.total)}</td>
+            </tr>
+        `;
+    });
+}
+
+/**
+ * Masque le tableau de classement et affiche le quiz.
+ */
+function hideLeaderboard() {
+    document.getElementById("leaderboard-container").style.display = 'none';
+    document.getElementById("quiz-container").style.display = 'block';
+}
+
+/**
+ * Efface tous les scores enregistrés pour cette classe (Terminale).
+ */
+function clearLeaderboard() {
+    if (confirm("Êtes-vous sûr de vouloir effacer TOUS les scores du classement Terminale ? Cette action est irréversible.")) {
+        localStorage.removeItem(SCORE_STORAGE_KEY);
+        alert("Le classement Terminale a été effacé.");
+        showLeaderboard(); // Réaffiche le tableau vide
+    }
+}
+
+// Fonction pour commenter le score
+function getComment(score,total){
+    const pct=(score/total)*100;
+    if(pct>=90) return "Excellent ! 🌟 Félicitations !";
+    if(pct>=70) return "Très bon travail 🙂 Continuez !";
+    if(pct>=50) return "Résultat honorable 😐 Un peu plus d'effort.";
+    return "À revoir 🔴 Le travail est nécessaire.";
+}
+
+
+// =======================
+// 📌 Banque de questions (Terminale)
+// =======================
+const questionBank = [
+    { question: "Quelle est l’expression de l’énergie cinétique ?", options: ["Ec = m·g·h", "Ec = 1/2·m·v²", "Ec = m·v", "Ec = F·d"], correctAnswer: 1 },
+    { question: "Quelle est la constante de Planck ?", options: ["6,62×10⁻³⁴ J·s", "9,81 m/s²", "3×10⁸ m/s", "1,60×10⁻¹⁹ C"], correctAnswer: 0 },
+    { question: "Quelle est la charge élémentaire de l’électron ?", options: ["1,60×10⁻¹⁹ C", "9,11×10⁻³¹ kg", "6,62×10⁻³⁴ J·s", "3×10⁸ m/s"], correctAnswer: 0 },
+    { question: "Quelle loi relie U, R et I ?", options: ["Loi d’Ohm", "Loi de Newton", "Loi de Coulomb", "Loi de Planck"], correctAnswer: 0 },
+    { question: "Quelle est l’unité de la constante gravitationnelle G ?", options: ["N·m²/kg²", "J/kg", "m/s²", "C/N"], correctAnswer: 0 },
+    { question: "Quel est le rôle d’un catalyseur ?", options: ["Accélérer la réaction", "Modifier l’équilibre final", "Augmenter le rendement", "Changer les produits"], correctAnswer: 0 },
+    { question: "Quelle grandeur est mesurée en mol/L ?", options: ["Masse volumique", "Concentration molaire", "Pression", "pH"], correctAnswer: 1 },
+    { question: "Quelle est la formule du pH ?", options: ["pH = -log[H₃O⁺]", "pH = log[OH⁻]", "pH = -log[Na⁺]", "pH = [H₂O]"], correctAnswer: 0 },
+    { question: "Comment évolue une réaction exothermique ?", options: ["Elle absorbe de l’énergie", "Elle libère de l’énergie", "Elle ne change pas", "Elle s’annule"], correctAnswer: 1 },
+    { question: "Quelle particule n’a pas de charge ?", options: ["Proton", "Électron", "Neutron", "Ion"], correctAnswer: 2 },
+    { question: "Quelle est la formule de la vitesse dans un MRU ?", options: ["v = d/t", "v = a·t", "v = m·g", "v = E/m"], correctAnswer: 0 },
+    { question: "Quelle onde est électromagnétique ?", options: ["Son", "Lumière", "Séisme", "Vague"], correctAnswer: 1 },
+    { question: "Quelle est la relation de l’énergie d’un photon ?", options: ["E = h·ν", "E = m·c²", "E = F·d", "E = q·U"], correctAnswer: 0 },
+    { question: "Quelle grandeur se mesure en Hertz ?", options: ["Vitesse", "Fréquence", "Longueur d’onde", "Puissance"], correctAnswer: 1 },
+    { question: "Quel est le pH d’une solution basique ?", options: ["< 7", "= 7", "> 7", "= 0"], correctAnswer: 2 },
+    { question: "Quelle est la 3e loi de Newton ?", options: ["Inertie", "F = m·a", "Action-réaction", "Gravitation universelle"], correctAnswer: 2 },
+    { question: "Quelle est l’expression de l’énergie potentielle de pesanteur ?", options: ["Ep = m·g·h", "Ep = 1/2·m·v²", "Ep = q·U", "Ep = h·ν"], correctAnswer: 0 },
+    { question: "Quelle est la valeur approchée de g ?", options: ["3,0 m/s²", "6,62×10⁻³⁴ J·s", "9,81 m/s²", "1,6×10⁻¹⁹ C"], correctAnswer: 2 },
+    { question: "Quel métal est utilisé dans les anodes des piles ?", options: ["Cuivre", "Zinc", "Fer", "Argent"], correctAnswer: 1 },
+    { question: "Quelle loi décrit les gaz parfaits ?", options: ["PV = nRT", "E = mc²", "F = m·a", "pH = -log[H₃O⁺]"], correctAnswer: 0 }
+];
+
+// Mélanger et sélectionner les questions
+function selectRandomQuestions() {
+    const shuffled = [...questionBank];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled.slice(0, totalQuestions);
+}
+
+// Générer le quiz
+function generateQuiz() {
+    const quizContainer = document.getElementById("quiz");
+    quizContainer.innerHTML = "";
+    quizAttempted = false; // Réinitialiser le statut
+
+    const saveButton = document.querySelector('.save-score-btn');
+    if (saveButton) {
+        saveButton.disabled = false;
+        saveButton.textContent = "Enregistrer mon score";
+    }
+
+    const selected = selectRandomQuestions();
+    window.correctAnswers = {};
+
+    selected.forEach((q, index) => {
+        const qNum = index + 1;
+        window.correctAnswers[`q${qNum}`] = q.correctAnswer;
+
+        quizContainer.innerHTML += `
+            <div class="question">
+                <div class="question-number">Question ${qNum}/${totalQuestions}</div>
+                <div class="question-text">${q.question}</div>
+                <div class="options">
+                    ${q.options.map((opt, i) =>
+                        `<label class="option">
+                            <input type="radio" name="q${qNum}" value="${i}">
+                            ${String.fromCharCode(97 + i)}) ${opt}
+                        </label>`
+                    ).join("")}
+                </div>
+            </div>
+        `;
+    });
+}
+
+// Vérifier les réponses
+function checkAnswers() {
+    let score = 0;
+    totalQuestions = Object.keys(window.correctAnswers).length;
+
+    for (let i = 1; i <= totalQuestions; i++) {
+        const questionName = "q" + i;
+        const selected = document.querySelector(`input[name=${questionName}]:checked`);
+        const questionElement = document.querySelectorAll(".question")[i - 1];
+
+        questionElement.classList.remove("correct", "incorrect");
+
+        if (selected) {
+            if (parseInt(selected.value) === window.correctAnswers[questionName]) {
+                score++;
+                questionElement.classList.add("correct");
+            } else {
+                questionElement.classList.add("incorrect");
+            }
+        }
+    }
+
+    currentScore = score;
+    quizAttempted = true; // Marquer le quiz comme soumis
+    
+    document.getElementById("score").textContent = `Score: ${score}/${totalQuestions}`;
+    document.getElementById("score-details").textContent =
+        `Vous avez répondu correctement à ${score} questions sur ${totalQuestions}.`;
+
+    document.getElementById("save-score-container").style.display = "block";
+    document.getElementById("results").style.display = "block";
+}
+
+// Reset du quiz
+function resetQuiz() {
+    document.getElementById("quiz").innerHTML = "";
+    document.getElementById("results").style.display = "none";
+    document.getElementById("save-score-container").style.display = "none";
+    
+    // Réinitialiser le bouton d'enregistrement
+    const saveButton = document.querySelector('.save-score-btn');
+    if (saveButton) {
+        saveButton.disabled = false;
+        saveButton.textContent = "Enregistrer mon score";
+    }
+
+    generateQuiz(); // Générer un nouveau quiz
+}
+
+// =======================
+// 📌 Initialisation et contrôle d'accès
+// =======================
+document.addEventListener("DOMContentLoaded", () => {
+    const isConnected = localStorage.getItem("isLoggedIn") === "true";
+    const studentClass = localStorage.getItem("studentClass");
+
+    if (!isConnected) {
+        alert("⛔ Vous devez être connecté pour accéder au quiz.");
+        window.location.replace(LOGIN_PAGE);
+        return;
+    }
+    
+    // Contrôle d'accès à la classe
+    if (studentClass !== CURRENT_CLASS) {
+        alert(`⛔ Accès réservé à la classe de ${CURRENT_CLASS}. Votre classe actuelle est ${studentClass}.`);
+        window.location.replace("index.html"); 
+        return; 
+    }
+    
+    generateQuiz();
+});
+</script>
+
+<div class="container">
+<header>
+    <h1>QCM de Physique-Chimie</h1>
+    <p class="subtitle">Niveau Terminale - Préparez le Bac !</p>
+</header>
+
+<div class="quiz-container" id="quiz-container">
+    <div class="quiz-header">
+        <h2>Questionnaire à Choix Multiples</h2>
+        <p>20 questions - Choisissez la bonne réponse</p>
+    </div>
+    <div class="quiz-body">
+        <div id="quiz"></div>
+        <div class="buttons">
+            <button class="btn submit-btn" onclick="checkAnswers()">Soumettre les réponses</button>
+            <button class="btn reset-btn" onclick="resetQuiz()">Réinitialiser</button>
+        </div>
+        <div class="results" id="results">
+            <div class="score" id="score"></div>
+            <div class="score-details" id="score-details"></div>
+            
+            <div class="save-score-container" id="save-score-container" style="display:none;">
+                <button class="btn save-score-btn" onclick="saveScore()">Enregistrer mon score</button>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn show-leaderboard-btn" onclick="showLeaderboard()">Voir le classement</button>
+                <button class="btn reset-btn" onclick="resetQuiz()">Refaire le quiz</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="leaderboard-container" id="leaderboard-container" style="display:none;">
+    <div class="leaderboard-header">
+        <h2 id="leaderboard-title">Classement Terminale</h2>
+    </div>
+    <div class="leaderboard-body">
+        <table class="leaderboard-table">
+            <thead>
+                <tr><th>Position</th><th>Nom</th><th>Score</th><th>Date & Heure</th><th>Commentaire</th></tr>
+            </thead>
+            <tbody id="leaderboard-body">
+                </tbody>
+        </table>
+        <div class="buttons" style="justify-content:center; margin-top:20px;">
+            <button class="btn reset-btn" onclick="hideLeaderboard()">Retour au quiz</button>
+            <button class="btn reset-btn" style="background: #f39c12;" onclick="clearLeaderboard()">Effacer le classement</button>
+        </div>
+    </div>
+</div>
+
+<footer><p>&copy; 2025 Nguyen Thomas. Tous droits réservés.</p></footer>
+</div>
+</body>
+</html>
