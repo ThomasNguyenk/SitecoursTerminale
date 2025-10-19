@@ -1,269 +1,236 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil Terminale</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding-top: 60px;
-            background-color: #f4f4f4;
-        }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-        section {
-            padding: 20px;
-            margin: 10px;
-            background: #ff0000;
-            border-radius: 5px;
-        }
-        h2 {
-            color: #333;
-        }
-        .project {
-            margin-bottom: 20px;
-        }
-        footer {
-            text-align: center;
-            padding: 10px 0;
-            background: #333;
-            color: #fff;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <title>Accueil</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-        /* ======= MENU ======= */
-        .bandeau {
-            background-color: #000000;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20190813/pngtree-digital-technology-blue-background-banner-image_298195.jpg');
-            background-size: cover;
-            background-position: center;
-        }
+  /* --- Image de fond ajustée --- */
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url('https://ecoleexpo.com/wp-content/uploads/2022/01/cropped-Ecole-Expo-site.png');
 
-        /* Bouton burger */
-        .menu-btn {
-            font-size: 26px;
-            cursor: pointer;
-            color: white;
-            background: none;
-            border: none;
-            display: none;
-        }
+  /* Garde toute l’image visible */
+  background-size: contain;
 
-        /* Liens du menu */
-        .menu-links {
-            display: flex;
-            gap: 15px;
-        }
-        .menu-links a {
-            color: rgb(0, 0, 0); 
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            transition: color 0.3s ease;
-            display: inline-block;
-        }
-        .menu-links a:hover {
-            color: yellow;
-        }
+  /* Centre parfaitement l’image dans la page */
+  background-position: center center;
 
-        /* ======= MODE MOBILE ======= */
-        @media (max-width: 768px) {
-            .menu-btn {
-                display: block;
-            }
-            .menu-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                width: 100%;
-                background: rgba(0, 0, 0, 0.9);
-                text-align: center;
-                padding: 20px 0;
-            }
-            .menu-links a {
-                display: block;
-                margin: 10px 0;
-                color: white;
-            }
-            .menu-links.active {
-                display: flex;
-            }
-        }
+  /* Empêche la répétition */
+  background-repeat: no-repeat;
 
-        /* Animation zoom fond */
-        @keyframes zoomBg {
-            from {
-                background-size: 120%;
-            }
-            to {
-                background-size: 150%;
-            }
-        }
+  /* Fixe l’image pour effet parallaxe */
+  background-attachment: fixed;
+}
 
-        /* SECTION avec fond dynamique */
-        #about {
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            text-align: center; 
-            background-color: #000; 
-            background-image: url('https://live.staticflickr.com/5444/7375631634_64e0c5b687_b.jpg'); 
-            background-size: 120%; 
-            background-position: center; 
-            background-repeat: no-repeat; 
-            animation: zoomBg 12s ease-in-out infinite alternate;
-            color: #ffffff; /* Texte en blanc */
-            padding: 20px;
-        }
-        
-        #content-box {
-            background-color: rgba(0,0,0,0.6); 
-            padding: 20px; 
-            border-radius: 10px;
-            max-width: 80%;
-        }
 
-    </style>
+
+    /* === BANDEAU DE NAVIGATION === */
+    nav.bandeau {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(4px);
+      color: white;
+      z-index: 1000;
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .menu-btn {
+      position: absolute;
+      left: 15px;
+      top: 10px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .menu-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .menu-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .menu-links a:hover {
+      color: #00bcd4;
+    }
+
+    /* Menu mobile */
+    @media (max-width: 768px) {
+      .menu-links {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.9);
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        padding: 15px 0;
+      }
+      .menu-links.show {
+        display: flex;
+      }
+    }
+
+    /* === SECTION CENTRALE === */
+    #about {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 80px; /* espace pour le bandeau */
+    }
+
+    #content-box {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 15px;
+      color: #fff;
+      max-width: 700px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+    }
+
+    /* Effet machine à écrire */
+    .typing {
+      display: inline-block;
+      border-right: 3px solid #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 3s steps(30, end), blink 0.8s infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    /* Apparition douce du texte */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fadeIn 1.5s forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === FOOTER === */
+    footer {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 15px 0;
+      font-size: 16px;
+      width: 100%;
+      backdrop-filter: blur(4px);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+    }
+  </style>
 </head>
 <body>
-    <nav class="bandeau">
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-        <div class="menu-links" id="menuLinks">
-            <a href="index.html">Accueil</a>
-            <a href="Terminale.html" data-class="Terminale">Cours de Terminale</a> 
-            <a href="Quiz de révision de Terminale.html" data-class="Terminale">Quiz de révision de Terminale</a>          
-            <a href="Connexion étudiant.html" id="authLink">Connexion Étudiant</a> 
-        </div>
-    </nav>
 
-    <section id="about">
-        <div id="content-box">
-             <h2 style="color: #ffffff;">Chargement en cours...</h2>
-        </div>
-    </section>
+  <!-- === MENU DE NAVIGATION === -->
+  <nav class="bandeau">
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <div class="menu-links" id="menuLinks">
+      <a href="index.html">Accueil</a>
+      <a href="Terminale.html">Cours</a>
+      <a href="Quiz de révision de Terminale.html">Quiz</a>
+      <a href="espaceNote.html">Notes</a>
+      <a href="AideAvecIA.html">Questions à l'aide de l'IA</a>
+      <a href="MiniDéfi.html">Mini défi</a>
+      <a href="Connexion étudiant.html">Connexion</a>
+    </div>
+  </nav>
 
-    <footer>
-        <p>&copy; 2025. Programmée par NGUYEN Thomas. Tous droits réservés</p>
-    </footer>
+  <!-- === MESSAGE CENTRAL === -->
+  <section id="about">
+    <div id="content-box">
+      <h2 id="welcome-text" class="typing">Chargement...</h2>
+      <p id="info-text" class="fade-in" style="color: #ffffff; margin-top: 15px; font-size: 1.2em;"></p>
+    </div>
+  </section>
 
-    <script>
-        const LOGIN_PAGE = "Connexion étudiant.html";
-        // Map pour comparer les niveaux de classe (conservée mais non utilisée pour le filtrage)
-        const classOrder = { 'Seconde': 1, 'Première': 2, 'Terminale': 3 };
+  <!-- === FOOTER === -->
+  <footer>
+    <p>&copy; 2025. Programmée par NGUYEN Thomas. Tous droits réservés.</p>
+  </footer>
 
-        /**
-         * Déconnecte l'utilisateur et le redirige.
-         */
-        function logout(event) {
-            if (event) event.preventDefault();
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('currentUser');
-            localStorage.removeItem('studentClass'); 
-            alert("Vous êtes déconnecté. Redirection vers la page de connexion.");
-            window.location.replace(LOGIN_PAGE);
-        }
+  <script>
+    // --- Menu déroulant pour mobile ---
+    function toggleMenu() {
+      const links = document.getElementById("menuLinks");
+      links.classList.toggle("show");
+    }
 
-        /**
-         * Simule le choix de la classe et la force à Terminale.
-         * Cette fonction est conservée pour des raisons de compatibilité, mais force la valeur.
-         */
-        function setStudentClass(selectedClass) {
-            // Dans ce nouveau contexte, nous forçons la classe à Terminale
-            localStorage.setItem('studentClass', 'Terminale');
-            renderHomePageContent();
-        }
+    // --- Message dynamique ---
+    const welcome = document.getElementById('welcome-text');
+    const info = document.getElementById('info-text');
 
-        /**
-         * Applique le contrôle d'accès sur le menu.
-         * Puisque le menu ne contient que des liens Terminale, cette fonction est simplifiée.
-         */
-        function applyAccessControl() {
-            const studentClass = localStorage.getItem('studentClass');
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            const authLink = document.getElementById('authLink');
+    const name = localStorage.getItem('currentUser') || 'Étudiant(e)';
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const classe = localStorage.getItem('studentClass') || 'Seconde';
 
-            // GESTION DU LIEN D'AUTHENTIFICATION / DÉCONNEXION
-            if (isLoggedIn) {
-                // Le texte affiche Terminale, car la classe est forcée
-                authLink.textContent = `Déconnexion (Terminale)`; 
-                authLink.href = "#";
-                authLink.onclick = logout;
-            } else {
-                 authLink.textContent = "Connexion Étudiant";
-                 authLink.href = LOGIN_PAGE;
-                 authLink.onclick = null;
-            }
-            
-            // Le filtrage des liens est désormais inutile puisque seul Terminale est affiché dans le HTML.
-        }
+    const message = isLoggedIn 
+      ? `Bienvenue sur le site, ${name} !`
+      : `Bienvenue sur le site des cours en ligne 🎓`;
 
-        /**
-         * Rend le contenu de la page d'accueil pour la Terminale.
-         */
-        function renderHomePageContent() {
-            const contentBox = document.getElementById('content-box');
-            const studentName = localStorage.getItem('currentUser') || 'Étudiant(e)';
+    const message2 = isLoggedIn 
+      ? `Vous êtes actuellement connecté pour les cours de <b>${classe}</b>.`
+      : `Connectez-vous pour accéder à vos cours, quiz et notes.`;
 
-            // CONTENU UNIQUE : Pas de sélecteur de classe
-            contentBox.innerHTML = `
-                <h2 style="color: #ffffff;">Bienvenue sur le site, ${studentName} !</h2>
-                <p style="color: #ffffff; margin-top: 15px; font-size: 1.2em;">
-                    Vous êtes sur l'espace dédié aux cours de **Terminale**. 🎓
-                </p>
-                <p style="color: #ffffff; width: 60%; margin: 20px auto 10px;">
-                    Utilisez le menu ci-dessus pour accéder directement aux cours et aux quiz de révision.
-                </p>
-            `;
-            
-            // Appliquer le filtre de menu après le rendu
-            applyAccessControl();
-        }
+    // Effet "machine à écrire"
+    let index = 0;
+    welcome.textContent = "";
+    function typeEffect() {
+      if (index < message.length) {
+        welcome.textContent += message.charAt(index);
+        index++;
+        setTimeout(typeEffect, 80);
+      } else {
+        info.innerHTML = message2;
+      }
+    }
+    typeEffect();
+  </script>
 
-
-        // --- EXÉCUTION AU CHARGEMENT ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
-            if (!isLoggedIn) {
-                // Si non connecté, REDIRIGER immédiatement vers la page de connexion
-                alert("Accès refusé. Veuillez vous connecter.");
-                window.location.replace(LOGIN_PAGE);
-                return;
-            }
-            
-            // FORCER LA CLASSE À TERMINALE au chargement de la page d'accueil
-            localStorage.setItem('studentClass', 'Terminale');
-            
-            // Si connecté, RENDRE le contenu de la page d'accueil
-            renderHomePageContent();
-        });
-
-        // Fonction pour le menu mobile
-        function toggleMenu() {
-            document.getElementById("menuLinks").classList.toggle("active");
-        }
-    </script>
 </body>
 </html>
