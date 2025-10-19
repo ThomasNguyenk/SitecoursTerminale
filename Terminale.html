@@ -7,7 +7,7 @@
     <style>
         body {
             margin: 0;
-            padding-top: 60px; /* espace pour ne pas cacher le contenu sous le bandeau */
+            padding-top: 60px;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
         }
@@ -40,29 +40,28 @@
             background-position: center;
         }
 
-        /* Bouton burger */
         .menu-btn {
             font-size: 26px;
             cursor: pointer;
-            color: rgb(0, 0, 0);
+            color: white;
             background: none;
             border: none;
-            display: none; /* caché sur PC */
+            display: none;
         }
 
-        /* Liens du menu */
         .menu-links {
             display: flex;
             gap: 15px;
         }
+
         .menu-links a {
-            color: rgb(0, 0, 0);
+            color: black;
             text-decoration: none;
             font-size: 18px;
             font-weight: bold;
             transition: color 0.3s ease;
-            display: inline-block; /* Ajouté pour le filtrage */
         }
+
         .menu-links a:hover {
             color: yellow;
         }
@@ -70,8 +69,9 @@
         /* ======= MODE MOBILE ======= */
         @media (max-width: 768px) {
             .menu-btn {
-                display: block; /* visible sur mobile */
+                display: block;
             }
+
             .menu-links {
                 display: none;
                 flex-direction: column;
@@ -83,212 +83,142 @@
                 text-align: center;
                 padding: 20px 0;
             }
+
             .menu-links a {
+                color: white;
                 display: block;
                 margin: 10px 0;
-                color: white;
             }
+
             .menu-links.active {
                 display: flex;
             }
         }
-         /* Animation zoom fond */
+
+        /* Animation zoom fond */
         @keyframes zoomBg {
             from { background-size: 120%; }
             to { background-size: 150%; }
         }
+
         /* SECTION avec fond dynamique */
         #about {
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            text-align: center; 
-            background-color: #000; 
-            background-image: url('https://i.pinimg.com/736x/24/b0/c0/24b0c0ae1d038a85ea5012d6f8352c3b.jpg'); 
-            background-size: 120%; 
-            background-position: center; 
-            background-repeat: no-repeat; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            background-color: #000;
+            background-image: url('https://live.staticflickr.com/5444/7375631634_64e0c5b687_b.jpg');
+            background-size: 120%;
+            background-position: center;
+            background-repeat: no-repeat;
             animation: zoomBg 12s ease-in-out infinite alternate;
         }
     </style>
 </head>
+
 <body>
-   <nav class="bandeau">
+    <nav class="bandeau">
         <button class="menu-btn" onclick="toggleMenu()">☰</button>
         <div class="menu-links" id="menuLinks">
             <a href="index.html">Accueil</a>
             <a href="Cours de 2nd.html">Cours de 2nd</a>
-            <a href="1ere année.html" data-class="Première">Cours de 1ère Année</a>
-            <a href="Terminale.html" data-class="Terminale">Cours de Terminale</a>
+            <a href="1ere année.html">Cours de 1ère Année</a>
+            <a href="Terminale.html">Cours de Terminale</a>
             <a href="Quiz de révision de seconde.html">Quiz de révision de seconde</a>
-            <a href="Quiz de révision de 1ère Année.html" data-class="Première">Quiz de révision de 1ère Année</a>
-            <a href="Quiz de révision de Terminale.html" data-class="Terminale">Quiz de révision de Terminale</a>
-            <a href="Connexion étudiant.html" id="authLink">Connexion Étudiant</a>
+            <a href="Quiz de révision de 1ère Année.html">Quiz de révision de 1ère Année</a>
+            <a href="Quiz de révision de Terminale.html">Quiz de révision de Terminale</a>
         </div>
     </nav>
 
-     <section id="about" 
-        style="
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            text-align: center; 
-            background-color: #000; 
-            background-image: url('https://live.staticflickr.com/5444/7375631634_64e0c5b687_b.jpg'); 
-            background-size: 120%; 
-            background-position: center; 
-            background-repeat: no-repeat; 
-            animation: zoomBg 12s ease-in-out infinite alternate;
-        ">
+    <section id="about">
         <h2 style="
-    color: #C8A97E; 
-    background: linear-gradient(90deg, rgba(74,35,90,0.8), rgba(200,169,126,0.1), rgba(74,35,90,0.8)); 
-    padding: 15px; 
-    border-radius: 10px; 
-    text-align: center; 
-    margin: 0 auto 20px; 
-    max-width: 800px; 
-    font-size: 2rem;
-    text-shadow: 0 0 10px #FFFAEE; /* Effet de lueur dorée */
-    border: 1px solid #C8A97E;
-">
-    Cours de Terminale de Physique Chimie :
-</h2>
+            color: #C8A97E;
+            background: linear-gradient(90deg, rgba(74,35,90,0.8), rgba(200,169,126,0.1), rgba(74,35,90,0.8));
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 0 auto 20px;
+            max-width: 800px;
+            font-size: 2rem;
+            text-shadow: 0 0 10px #FFFAEE;
+            border: 1px solid #C8A97E;">
+            Cours de Terminale de Physique Chimie :
+        </h2>
 
-<p style="
-    color: #ffffff; 
-    max-width: 600px; 
-    margin: 20px auto; 
-    background-color: rgba(0,0,0,0.6); 
-    padding: 15px; 
-    border-radius: 10px; 
-    text-align: center; 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-">
-    Bienvenue au cours de Terminale de physique chimie, ici se déroulent des cours pour la préparation du BAC
-</p>
+        <p style="
+            color: #ffffff;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: rgba(0,0,0,0.6);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);">
+            Bienvenue au cours de Terminale de physique-chimie, ici se déroulent des cours pour la préparation du BAC.
+        </p>
 
-<p style="
-    color: #FFFAEE; /* Blanc cassé */
-    max-width: 600px; 
-    margin: 20px auto; 
-    /* Rouge profond/Marron pour l'avertissement */
-    background-color: rgba(136, 8, 8, 0.85); 
-    padding: 15px; 
-    border-radius: 10px; 
-    text-align: center; 
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-">
-    ⛔️ **Pas de téléphone portable**
-</p>
+        <p style="
+            color: #FFFAEE;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: rgba(136, 8, 8, 0.85);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);">
+            ⛔️ Pas de téléphone portable
+        </p>
 
-<div style="display:flex; gap:25px; justify-content:center; margin-top:40px; margin-bottom: 40px;">
+        <div style="display:flex; gap:25px; justify-content:center; margin-top:40px; margin-bottom: 40px;">
+            <!-- Table des cours -->
+            <table style="border-collapse: separate; border-spacing: 0 15px;
+                background-image: url('https://img.freepik.com/photos-premium/vue-grand-angle-table-bois_1048944-21994102.jpg?semt=ais_incoming&w=740&q=80');
+                background-size: cover;
+                background-position: center;
+                border-radius:30px;
+                width: 320px;
+                padding: 15px 20px 30px 20px;
+                box-shadow: 0 12px 25px rgba(0,0,0,0.8);
+                border: 4px solid #C8A97E;">
+                
+                <thead>
+                    <tr>
+                        <th style="color:#FFFAEE; text-align: center; font-size: 1.6rem; padding: 20px 0; background-color: #4A235A; border-radius: 25px 25px 0 0;">COURS :</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><a href="https://gervillereache.lyc.ac-guadeloupe.fr/wp-content/uploads/sites/70/2021/03/Tableau-scaled.jpg" style="display:block; background-color:rgba(74,35,90,0.8); color:#C8A97E; text-decoration:none; padding:15px; border-radius:8px; text-align:center; font-weight:bold;">Tableau périodique des éléments</a></td></tr>
+                    <tr><td><a href="#" style="display:block; background-color:rgba(74,35,90,0.8); color:#C8A97E; text-decoration:none; padding:15px; border-radius:8px; text-align:center; font-weight:bold;">Chimie 1</a></td></tr>
+                    <tr><td><a href="#" style="display:block; background-color:rgba(74,35,90,0.8); color:#C8A97E; text-decoration:none; padding:15px; border-radius:8px; text-align:center; font-weight:bold;">Physique 1</a></td></tr>
+                </tbody>
+            </table>
 
-    <table style="border-collapse: separate; border-spacing: 0 15px;
-        background-image: url('https://img.freepik.com/photos-premium/vue-grand-angle-table-bois_1048944-21994102.jpg?semt=ais_incoming&w=740&q=80'); 
-        background-size: cover; 
-        background-position: center; 
-        border-radius:30px;
-        width: 320px;
-        padding: 15px 20px 30px 20px;
-        box-shadow: 0 12px 25px rgba(0,0,0,0.8);
-        /* Bordure d'encadrement Or Mât */
-        border: 4px solid #C8A97E;">
-        
-        <thead>
-            <tr>
-                <th style="color:#FFFAEE; text-align: center; font-size: 1.6rem; padding: 20px 0; text-shadow: 1px 1px 5px #000; background-color: #4A235A; border-radius: 25px 25px 0 0; letter-spacing: 1px;">COURS : </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td style="padding: 0 5px;">
-                <a href="https://gervillereache.lyc.ac-guadeloupe.fr/wp-content/uploads/sites/70/2021/03/Tableau-scaled.jpg" style="
-                    display: block; 
-                    /* Fond semi-transparent pourpre */
-                    background-color: rgba(74,35,90,0.8); 
-                    /* Texte Or Mât */
-                    color:#C8A97E; 
-                    text-decoration:none; 
-                    padding: 15px; 
-                    border-radius: 8px; 
-                    text-align: center; 
-                    font-weight: bold; 
-                    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-                    text-shadow: 1px 1px 2px #000;
-                    transition: all 0.3s;
-                ">Tableau périodique des éléments</a>
-            </td></tr>
-            <tr><td style="padding: 0 5px;">
-                <a href="URL" style="display: block; background-color: rgba(74,35,90,0.8); color:#C8A97E; text-decoration:none; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.5); text-shadow: 1px 1px 2px #000; transition: all 0.3s;">Chimie 1</a>
-            </td></tr>
-            <tr><td style="padding: 0 5px;">
-                <a href="URL" style="display: block; background-color: rgba(74,35,90,0.8); color:#C8A97E; text-decoration:none; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.5); text-shadow: 1px 1px 2px #000; transition: all 0.3s;">Physique 1</a>
-            </td></tr>
-            <tr><td style="padding: 0 5px;">
-                <a href="URL" style="display: block; background-color: rgba(74,35,90,0.8); color:#C8A97E; text-decoration:none; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.5); text-shadow: 1px 1px 2px #000; transition: all 0.3s;">Cours 4</a>
-            </td></tr>
-            <tr><td style="padding: 0 5px;">
-                <a href="URL" style="display: block; background-color: rgba(74,35,90,0.8); color:#C8A97E; text-decoration:none; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.5); text-shadow: 1px 1px 2px #000; transition: all 0.3s;">Cours 5</a>
-            </td></tr>
-            <tr><td style="padding: 0 5px;">
-                <a href="URL" style="display: block; background-color: rgba(74,35,90,0.8); color:#C8A97E; text-decoration:none; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.5); text-shadow: 1px 1px 2px #000; transition: all 0.3s;">Cours 6</a>
-            </td></tr>
-        </tbody>
-    </table>
-
-    <table style="border-collapse: separate; border-spacing: 0 15px;
-        background-image: url('https://img.freepik.com/photos-premium/livres-debout-table-fond-fond_158398-85.jpg?semt=ais_hybrid&w=740&q=80'); 
-        background-size: cover; 
-        background-position: center; 
-        border-radius:30px;
-        width: 320px;
-        padding: 15px 20px 30px 20px;
-        box-shadow: 0 12px 25px rgba(0,0,0,0.8);
-        /* Bordure d'encadrement Or Mât */
-        border: 4px solid #C8A97E;">
-
-        <thead>
-            <tr>
-                <th style="color:#FFFAEE; text-align: center; font-size: 1.6rem; padding: 20px 0; text-shadow: 1px 1px 5px #000; background-color: #0B5345; border-radius: 25px 25px 0 0; letter-spacing: 1px;">EXERCICES : </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td style="padding: 0 5px;">
-                <a href="URL" style="
-                    display: block; 
-                    /* Fond semi-transparent Vert Forêt */
-                    background-color: rgba(11, 83, 69, 0.8); 
-                    color:#FFFAEE; 
-                    text-decoration:none; 
-                    padding: 15px; 
-                    border-radius: 8px; 
-                    text-align: center; 
-                    font-weight: bold; 
-                    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-                    text-shadow: 1px 1px 2px #000;
-                    transition: all 0.3s;
-                ">Exercice 1</a>
-            </td></tr>
-            <tr><td style="padding: 0 5px;">
-                <a href="URL" style="display: block; background-color: rgba(11, 83, 69, 0.8); color:#FFFAEE; text-decoration:none; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.5); text-shadow: 1px 1px 2px #000; transition: all 0.3s;">Exercice 2</a>
-            </td></tr>
-            <tr><td style="padding: 0 5px;">
-                <a href="URL" style="display: block; background-color: rgba(11, 83, 69, 0.8); color:#FFFAEE; text-decoration:none; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.5); text-shadow: 1px 1px 2px #000; transition: all 0.3s;">Exercice 3</a>
-            </td></tr>
-            <tr><td style="padding: 0 5px;">
-                <a href="URL" style="display: block; background-color: rgba(11, 83, 69, 0.8); color:#FFFAEE; text-decoration:none; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.5); text-shadow: 1px 1px 2px #000; transition: all 0.3s;">Exercice 4</a>
-            </td></tr>
-        </tbody>
-    </table>
-    
-</div>
-
-
+            <!-- Table des exercices -->
+            <table style="border-collapse: separate; border-spacing: 0 15px;
+                background-image: url('https://img.freepik.com/photos-premium/livres-debout-table-fond-fond_158398-85.jpg?semt=ais_hybrid&w=740&q=80');
+                background-size: cover;
+                background-position: center;
+                border-radius:30px;
+                width: 320px;
+                padding: 15px 20px 30px 20px;
+                box-shadow: 0 12px 25px rgba(0,0,0,0.8);
+                border: 4px solid #C8A97E;">
+                
+                <thead>
+                    <tr>
+                        <th style="color:#FFFAEE; text-align:center; font-size:1.6rem; padding:20px 0; background-color:#0B5345; border-radius:25px 25px 0 0;">EXERCICES :</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><a href="#" style="display:block; background-color:rgba(11,83,69,0.8); color:#FFFAEE; text-decoration:none; padding:15px; border-radius:8px; text-align:center; font-weight:bold;">Exercice 1</a></td></tr>
+                    <tr><td><a href="#" style="display:block; background-color:rgba(11,83,69,0.8); color:#FFFAEE; text-decoration:none; padding:15px; border-radius:8px; text-align:center; font-weight:bold;">Exercice 2</a></td></tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <footer>
@@ -296,68 +226,9 @@
     </footer>
 
     <script>
-        const LOGIN_PAGE = "Connexion étudiant.html";
-        const classOrder = { 'Seconde': 1, 'Première': 2, 'Terminale': 3 };
-
-        function logout(event) {
-            if (event) event.preventDefault();
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('currentUser');
-            localStorage.removeItem('studentClass');
-            alert("Vous êtes déconnecté. Redirection vers la page de connexion.");
-            window.location.replace(LOGIN_PAGE);
-        }
-
         function toggleMenu() {
             document.getElementById("menuLinks").classList.toggle("active");
         }
-
-        function applyAccessControl() {
-            const studentClass = localStorage.getItem('studentClass');
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            const menuLinksContainer = document.getElementById('menuLinks');
-            const authLink = document.getElementById('authLink');
-
-            // 1. GESTION DU LIEN D'AUTHENTIFICATION / DÉCONNEXION
-            if (isLoggedIn) {
-                authLink.textContent = `Déconnexion (${studentClass})`;
-                authLink.href = "#";
-                authLink.onclick = logout;
-            } else {
-                 authLink.textContent = "Connexion Étudiant";
-                 authLink.href = LOGIN_PAGE;
-                 authLink.onclick = null;
-                 return;
-            }
-            
-            // 2. FILTRAGE DES LIENS (COURS & QUIZ)
-            const studentLevel = classOrder[studentClass] || 0;
-            const restrictedLinks = menuLinksContainer.querySelectorAll('a[data-class]');
-            
-            restrictedLinks.forEach(link => {
-                const requiredClass = link.getAttribute('data-class');
-                const requiredLevel = classOrder[requiredClass];
-                
-                if (requiredLevel > studentLevel) {
-                    link.style.display = 'none'; // Masquer si le niveau requis est supérieur
-                } else {
-                    link.style.display = 'inline-block'; // Afficher sinon
-                }
-            });
-
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
-            if (!isLoggedIn) {
-                alert("Accès refusé. Veuillez vous connecter.");
-                window.location.replace(LOGIN_PAGE);
-                return;
-            }
-            
-            applyAccessControl();
-        });
     </script>
 </body>
 </html>
