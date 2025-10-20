@@ -6,13 +6,15 @@
 <title>QCM Physique-Chimie - Terminale</title>
 
 <style>
+/* Reset & Base */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
-    background: url('https://cdn.pixabay.com/photo/2017/03/28/12/13/physics-2180763_1280.jpg') no-repeat center center fixed;
+    background: url('https://cdn-imgix.headout.com/media/images/e4a728601dae2c994a2a7bba52d35e74-harrypotterlondon-13.jpg') 
+                no-repeat center center fixed;
     background-size: cover;
     min-height: 100vh;
     padding: 20px;
@@ -20,66 +22,67 @@ body {
 
 .container { max-width: 1000px; margin: 0 auto; }
 
+/* Header */
 header {
     text-align: center;
     padding: 30px 20px;
     margin-bottom: 30px;
     color: white;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-    background: rgba(0,0,0,0.6);
+    background: url('https://media3.giphy.com/media/OZCZRFgOx9nGxd0XQf/giphy.gif') 
+                no-repeat center center;
+    background-size: cover;
     border-radius: 10px;
 }
 h1 { font-size: 2.5rem; margin-bottom: 10px; }
 .subtitle { font-size: 1.2rem; opacity: 0.9; }
 
-.quiz-container {
+/* Containers */
+.quiz-container, .leaderboard-container {
     background: white;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     overflow: hidden;
     margin-bottom: 30px;
 }
-.quiz-header {
+.quiz-header, .leaderboard-header {
     background: #2c3e50;
     color: white;
     padding: 20px;
     text-align: center;
 }
-.quiz-body { padding: 30px; }
+.quiz-body, .leaderboard-body { padding: 30px; }
 
+/* Questions */
 .question {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     padding: 20px;
+    border: 1px solid #e0e0e0;
     border-radius: 10px;
     background: #f9f9f9;
     box-shadow: 0 3px 10px rgba(0,0,0,0.05);
 }
-.category {
-    background: #3498db;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 5px;
-    display: inline-block;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
 .question-number { font-weight: bold; color: #2575fc; margin-bottom: 10px; }
 .question-text { font-weight: bold; margin-bottom: 15px; color: #2c3e50; }
-
-.option { display: flex; align-items: center; gap: 10px; padding: 8px; cursor: pointer; border-radius: 8px; transition: 0.2s; }
-.option:hover { background: #edf7fd; }
+.options { display: flex; flex-direction: column; gap: 12px; }
+.option { display: flex; align-items: center; gap: 12px; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+.option:hover { background: #edf7fd; border-color: #3498db; }
 .option input { cursor: pointer; transform: scale(1.2); }
+.option label { cursor: pointer; width: 100%; }
 
-.question.correct { border-left: 5px solid #27ae60; background: #e6ffe6; }
-.question.incorrect { border-left: 5px solid #e74c3c; background: #ffe6e6; }
-
+/* Buttons */
 .buttons { display: flex; justify-content: center; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
 .btn { padding: 12px 25px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; font-weight: 600; }
 .submit-btn { background: #3498db; color: white; }
 .submit-btn:hover { background: #2980b9; }
 .reset-btn { background: #e74c3c; color: white; }
 .reset-btn:hover { background: #c0392b; }
+.save-score-btn { background: #27ae60; color: white; }
+.save-score-btn:hover { background: #219653; }
+.show-leaderboard-btn { background: #8e44ad; color: white; }
+.show-leaderboard-btn:hover { background: #732d91; }
 
+/* Results */
 .results {
     margin-top: 40px;
     padding: 30px;
@@ -87,138 +90,267 @@ h1 { font-size: 2.5rem; margin-bottom: 10px; }
     text-align: center;
     display: none;
     background: #f8f9fa;
+    border: 1px solid #e0e0e0;
 }
 .score { font-size: 2rem; font-weight: bold; margin-bottom: 20px; }
+.score-details { font-size: 1.2rem; margin-bottom: 25px; }
+.message { font-size: 1.3rem; margin-bottom: 25px; padding: 15px; border-radius: 8px; }
+
+/* Leaderboard */
+.leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.leaderboard-table th, .leaderboard-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+.leaderboard-table th { background-color: #f8f9fa; font-weight: bold; }
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: white;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    border-radius: 10px;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://i.pinimg.com/236x/5a/d8/77/5ad8779ec60744d790880a7f398f34cf.jpg') no-repeat center center;
+    background-size: cover;
+}
 </style>
 </head>
-
 <body>
-<div class="container">
-    <header>
-        <h1>QCM Physique-Chimie</h1>
-        <p class="subtitle">Niveau Terminale – 40 questions classées par thème</p>
-    </header>
 
-    <div class="quiz-container" id="quiz-container">
-        <div class="quiz-header">
-            <h2>Questionnaire à Choix Multiples</h2>
-            <p>Répondez aux questions et testez vos connaissances 🔬</p>
+
+<div class="container">
+<header>
+    <h1>QCM de Physique-Chimie</h1>
+    <p class="subtitle">Niveau Terminale - Testez vos connaissances</p>
+</header>
+
+<!-- Musique et bouton -->
+<audio id="background-music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+<div style="text-align:center; margin: 15px 0;">
+    <button class="btn" onclick="toggleMusic()" id="music-btn">🔇 Couper la musique</button>
+</div>
+
+<div class="quiz-container" id="quiz-container">
+    <div class="quiz-header">
+        <h2>Questionnaire à Choix Multiples</h2>
+        <p>20 questions - Choisissez la bonne réponse pour chaque question</p>
+    </div>
+    <div class="quiz-body">
+        <div id="quiz"></div>
+        <div class="buttons">
+            <button class="btn submit-btn" onclick="checkAnswers()">Soumettre les réponses</button>
+            <button class="btn reset-btn" onclick="resetQuiz()">Réinitialiser</button>
         </div>
-        <div class="quiz-body">
-            <div id="quiz"></div>
-            <div class="buttons">
-                <button class="btn submit-btn" onclick="checkAnswers()">Soumettre</button>
-                <button class="btn reset-btn" onclick="resetQuiz()">Réinitialiser</button>
+        <div class="results" id="results">
+            <div class="score" id="score"></div>
+            <div class="score-details" id="score-details"></div>
+            
+            <div class="save-score-container" id="save-score-container">
+                <button class="btn save-score-btn" onclick="saveScore()">Enregistrer mon score</button>
             </div>
-            <div class="results" id="results">
-                <div class="score" id="score"></div>
-                <div class="score-details" id="score-details"></div>
+            
+            <div class="buttons">
+                <button class="btn show-leaderboard-btn" onclick="showLeaderboard()">Voir mon classement</button>
+                <button class="btn reset-btn" onclick="resetQuiz()">Refaire le quiz</button>
             </div>
         </div>
     </div>
-
-    <footer><p style="text-align:center;color:white;">© 2025 Nguyen Thomas. Tous droits réservés.</p></footer>
 </div>
 
-<!-- ==== SCRIPT DU QUIZ ==== -->
+<div class="leaderboard-container" id="leaderboard-container" style="display:none;">
+    <div class="leaderboard-header">
+        <h2 id="leaderboard-title">Classement des Meilleurs Scores</h2>
+    </div>
+    <div class="leaderboard-body">
+        <table class="leaderboard-table">
+            <thead>
+                <tr><th>Position</th><th>Nom</th><th>Score</th><th>Date & Heure</th><th>Commentaire</th></tr>
+            </thead>
+            <tbody id="leaderboard-body"></tbody>
+        </table>
+        <div class="buttons" style="justify-content:center; margin-top:20px;">
+            <button class="btn reset-btn" onclick="hideLeaderboard()">Retour au quiz</button>
+            <button class="btn reset-btn" onclick="clearLeaderboard()">Effacer mon classement</button>
+        </div>
+    </div>
+</div>
+
+<footer><p>&copy; 2025 Nguyen Thomas. Tous droits réservés.</p></footer>
+</div>
+
 <script>
+// --- CONFIGURATION ---
+const CURRENT_USER = localStorage.getItem("currentUser") || "Guest";
+const SCORE_STORAGE_KEY = `quizScores_${CURRENT_USER}_Seconde`;
+
+// --- BANQUE DE QUESTIONS ---
 const questionBank = [
-    // ==== MÉCANIQUE ====
-    { category:"Mécanique", question:"Quelle est l’expression de l’énergie cinétique ?", options:["Ec = m·g·h","Ec = ½·m·v²","Ec = m·v","Ec = F·d"], correct:1 },
-    { category:"Mécanique", question:"Quelle est la 2e loi de Newton ?", options:["F = m·a","P = m·g","E = m·c²","I = U/R"], correct:0 },
-    { category:"Mécanique", question:"L’unité du travail d’une force est :", options:["N","J","W","Pa"], correct:1 },
-    { category:"Mécanique", question:"Quel mouvement a une vitesse constante ?", options:["Uniformément varié","Uniforme","Circulaire","Accéléré"], correct:1 },
-    { category:"Mécanique", question:"La masse d’un objet sur la Lune :", options:["Change","Reste identique","Double","Est nulle"], correct:1 },
-    { category:"Mécanique", question:"La vitesse est :", options:["Un vecteur","Un scalaire","Une constante","Une énergie"], correct:0 },
-    { category:"Mécanique", question:"L’énergie potentielle de pesanteur dépend de :", options:["vitesse","hauteur","temps","charge"], correct:1 },
-    { category:"Mécanique", question:"L’unité de la force est :", options:["W","J","N","kg"], correct:2 },
-
-    // ==== ÉLECTRICITÉ ====
-    { category:"Électricité", question:"Quelle loi relie U, R et I ?", options:["Loi d’Ohm","Loi de Newton","Loi de Coulomb","Loi de Planck"], correct:0 },
-    { category:"Électricité", question:"L’unité de la résistance est :", options:["Volt","Ampère","Ohm","Watt"], correct:2 },
-    { category:"Électricité", question:"Un générateur convertit :", options:["Énergie mécanique → électrique","Énergie chimique → électrique","Énergie thermique → mécanique","Aucune"], correct:1 },
-    { category:"Électricité", question:"Le symbole de la puissance électrique est :", options:["U","P","R","I"], correct:1 },
-    { category:"Électricité", question:"La tension se mesure avec :", options:["Ampèremètre","Voltmètre","Ohmmètre","Baromètre"], correct:1 },
-    { category:"Électricité", question:"La loi des nœuds s’applique à :", options:["Résistances en série","Courants dans un circuit","Tensions aux bornes","Charges"], correct:1 },
-    { category:"Électricité", question:"L’unité du courant est :", options:["W","V","A","C"], correct:2 },
-    { category:"Électricité", question:"Le courant continu est :", options:["Alternatif","Constant","Variable","Inverse"], correct:1 },
-
-    // ==== CHIMIE ====
-    { category:"Chimie", question:"Quel est le rôle d’un catalyseur ?", options:["Accélère la réaction","Change les produits","Augmente le rendement","Modifie l’équilibre"], correct:0 },
-    { category:"Chimie", question:"L’unité de la concentration molaire est :", options:["mol","mol/L","g","L"], correct:1 },
-    { category:"Chimie", question:"Le pH d’une solution neutre est :", options:["0","7","14","10"], correct:1 },
-    { category:"Chimie", question:"Le symbole chimique du sodium est :", options:["S","N","Na","So"], correct:2 },
-    { category:"Chimie", question:"Une liaison covalente implique :", options:["Partage d’électrons","Transfert d’électrons","Aucune interaction","Des ions"], correct:0 },
-    { category:"Chimie", question:"Un acide libère :", options:["OH⁻","H⁺","H₂O","Na⁺"], correct:1 },
-    { category:"Chimie", question:"La masse molaire s’exprime en :", options:["kg/mol","g/mol","mol/L","N"], correct:1 },
-    { category:"Chimie", question:"Une réaction exothermique :", options:["Absorbe de la chaleur","Libère de la chaleur","Ne change pas","Refroidit"], correct:1 },
-
-    // ==== ONDES & LUMIÈRE ====
-    { category:"Ondes & Lumière", question:"La lumière est :", options:["Une onde électromagnétique","Une onde mécanique","Un son","Une particule uniquement"], correct:0 },
-    { category:"Ondes & Lumière", question:"La vitesse de la lumière dans le vide est :", options:["3×10⁸ m/s","1,5×10⁸ m/s","3×10⁶ m/s","9,81 m/s²"], correct:0 },
-    { category:"Ondes & Lumière", question:"La longueur d’onde s’exprime en :", options:["s","Hz","m","J"], correct:2 },
-    { category:"Ondes & Lumière", question:"L’unité de la fréquence est :", options:["s","Hz","m","J"], correct:1 },
-    { category:"Ondes & Lumière", question:"Le son ne se propage pas :", options:["Dans l’eau","Dans l’air","Dans le vide","Dans le métal"], correct:2 },
-    { category:"Ondes & Lumière", question:"Un laser émet :", options:["Des ondes incohérentes","De la lumière cohérente","Des sons","Des particules alpha"], correct:1 },
-    { category:"Ondes & Lumière", question:"La diffraction est :", options:["Une absorption","Une déviation par un obstacle","Une réflexion","Une émission"], correct:1 },
-    { category:"Ondes & Lumière", question:"La couleur d’un objet dépend :", options:["Des électrons","De la lumière incidente","Du son","De la gravité"], correct:1 },
-
-    // ==== THERMODYNAMIQUE ====
-    { category:"Thermodynamique", question:"La température s’exprime en :", options:["Kelvin","Joule","Coulomb","Watt"], correct:0 },
-    { category:"Thermodynamique", question:"L’énergie interne dépend :", options:["De la pression","De la température","Du volume","De la masse"], correct:1 },
-    { category:"Thermodynamique", question:"Un transfert thermique s’effectue :", options:["Toujours du chaud vers le froid","Toujours du froid vers le chaud","Dans les deux sens","Jamais"], correct:0 },
-    { category:"Thermodynamique", question:"L’unité de la chaleur est :", options:["Joule","Kelvin","Newton","Watt"], correct:0 },
-    { category:"Thermodynamique", question:"Une transformation adiabatique :", options:["Échange de la chaleur","Sans échange de chaleur","Sans pression","Sans énergie"], correct:1 },
-    { category:"Thermodynamique", question:"La loi de Boyle-Mariotte relie :", options:["P et T","V et T","P et V","T et n"], correct:2 },
-    { category:"Thermodynamique", question:"La dilatation thermique augmente :", options:["Le volume","La masse","La pression","La densité"], correct:0 },
-    { category:"Thermodynamique", question:"Le zéro absolu correspond à :", options:["-273,15°C","0°C","100°C","-100°C"], correct:0 }
+    {question:"Quelle est l'unité de mesure de l'intensité du courant électrique ?", options:["Volt","Ampère","Ohm","Watt"], correctAnswer:1},
+    {question:"Quel gaz est majoritairement responsable de l'effet de serre additionnel ?", options:["Oxygène (O₂)","Diazote (N₂)","Dioxyde de carbone (CO₂)","Hydrogène (H₂)"], correctAnswer:2},
+    {question:"Formule chimique de l'eau ?", options:["CO₂","H₂O","O₂","NaCl"], correctAnswer:1},
+    {question:"Phénomène à l'origine des marées ?", options:["Rotation de la Terre","Attraction de la Lune","Courants marins","Pression atmosphérique"], correctAnswer:1},
+    {question:"pH d'une solution neutre ?", options:["0","7","10","14"], correctAnswer:1},
+    {question:"Particule chargée négativement ?", options:["Proton","Neutron","Électron","Nucléon"], correctAnswer:2},
+    {question:"Réaction avec l'oxygène ?", options:["Réduction","Oxydation","Combustion","Neutralisation"], correctAnswer:2},
+    {question:"Grandeur en joules ?", options:["Puissance","Intensité","Énergie","Tension"], correctAnswer:2},
+    {question:"Force qui s'oppose au glissement ?", options:["Gravitationnelle","Électromagnétique","Frottement","Centrifuge"], correctAnswer:2},
+    {question:"Loi de la gravitation universelle ?", options:["Einstein","Newton","Galilée","Hawking"], correctAnswer:1},
+    {question:"Symbole 'Na' ?", options:["Nickel","Néon","Azote","Sodium"], correctAnswer:3},
+    {question:"Vitesse lumière ?", options:["300 000 m/s","3 000 000 m/s","30 000 000 m/s","300 000 000 m/s"], correctAnswer:3},
+    {question:"Transformation chimique produisant chaleur ?", options:["Endothermique","Exothermique","Enzymatique","Oxydoréduction"], correctAnswer:1},
+    {question:"Formule vitesse-distance-temps ?", options:["v=d×t","v=d/t","v=t/d","d=v×t²"], correctAnswer:1},
+    {question:"Gaz nécessaire à la respiration ?", options:["Diazote","CO₂","O₂","Hydrogène"], correctAnswer:2},
+    {question:"Formule chimique du sel ?", options:["H₂O","CO₂","NaCl","C₆H₁₂O₆"], correctAnswer:2},
+    {question:"Instrument pour mesurer la masse ?", options:["Dynamomètre","Balance","Voltmètre","Thermomètre"], correctAnswer:1},
+    {question:"État avec volume fixe mais pas forme ?", options:["Solide","Liquide","Gaz","Plasma"], correctAnswer:1},
+    {question:"Particule déterminant l'identité d'un atome ?", options:["Neutron","Proton","Électron","Quark"], correctAnswer:1},
+    {question:"Stylo dans l'eau semble cassé ?", options:["Réflexion","Réfraction","Diffraction","Interférence"], correctAnswer:1},
+    {question:"Unité de force ?", options:["Joule","Watt","Newton","Pascal"], correctAnswer:2},
+    {question:"Gaz produit par photosynthèse ?", options:["CO₂","Diazote","O₂","Hydrogène"], correctAnswer:2},
+    {question:"Principal gaz atmosphérique ?", options:["O₂","CO₂","N₂","Argon"], correctAnswer:2},
+    {question:"Énergie utilisée par une éolienne ?", options:["Hydraulique","Solaire","Éolienne","Géothermique"], correctAnswer:2},
+    {question:"Point d'ébullition eau ?", options:["0°C","50°C","100°C","200°C"], correctAnswer:2},
+    {question:"Métal liquide à température ambiante ?", options:["Fer","Cuivre","Mercure","Aluminium"], correctAnswer:2},
+    {question:"Principe d'Archimède ?", options:["Newton","Ohm","Archimède","Pascal"], correctAnswer:2},
+    {question:"Couleur longueur d'onde la plus courte ?", options:["Rouge","Vert","Bleu","Jaune"], correctAnswer:2},
+    {question:"Acide dans le vinaigre ?", options:["Sulfurique","Chlorhydrique","Acétique","Citrique"], correctAnswer:2},
+    {question:"Phénomène permettant aux oiseaux de voler ?", options:["Poussée d'Archimède","Effet Bernoulli","Force centrifuge","Conduction thermique"], correctAnswer:1}
 ];
 
-function generateQuiz() {
-    const quizContainer = document.getElementById("quiz");
-    quizContainer.innerHTML = "";
-    window.correctAnswers = {};
+// Variables
+let currentScore=0; let totalQuestions=20;
 
-    questionBank.forEach((q, i) => {
-        const num = i + 1;
-        window.correctAnswers[`q${num}`] = q.correct;
-        quizContainer.innerHTML += `
-        <div class="question">
-            <div class="category">${q.category}</div>
-            <div class="question-number">Question ${num}/40</div>
-            <div class="question-text">${q.question}</div>
-            ${q.options.map((opt, j) => `
-                <label class="option">
-                    <input type="radio" name="q${num}" value="${j}">
-                    ${String.fromCharCode(97 + j)}) ${opt}
-                </label>`).join("")}
-        </div>`;
-    });
-}
-
-function checkAnswers() {
-    let score = 0;
-    const total = Object.keys(window.correctAnswers).length;
-    document.querySelectorAll(".question").forEach((qEl, i) => {
-        const name = "q" + (i + 1);
-        const selected = document.querySelector(`input[name="${name}"]:checked`);
-        qEl.classList.remove("correct","incorrect");
-        if (selected) {
-            if (parseInt(selected.value) === window.correctAnswers[name]) {
-                score++; qEl.classList.add("correct");
-            } else qEl.classList.add("incorrect");
-        }
-    });
-    document.getElementById("score").textContent = `Score : ${score}/${total}`;
-    document.getElementById("results").style.display = "block";
-}
-
-function resetQuiz() {
-    document.getElementById("results").style.display = "none";
+// Musique auto au chargement
+const music=document.getElementById("background-music");
+let musicPlaying=true;
+window.onload=function(){
     generateQuiz();
+    music.play().catch(()=>{musicPlaying=false; document.getElementById("music-btn").textContent="🎵 Activer la musique";});
+};
+
+// Toggle musique
+function toggleMusic(){
+    if(musicPlaying){ music.pause(); musicPlaying=false; document.getElementById("music-btn").textContent="🎵 Activer la musique";}
+    else{ music.play(); musicPlaying=true; document.getElementById("music-btn").textContent="🔇 Couper la musique";}
 }
 
-document.addEventListener("DOMContentLoaded", generateQuiz);
+// Sélection aléatoire
+function selectRandomQuestions(){
+    const shuffled=[...questionBank];
+    for(let i=shuffled.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+    }
+    return shuffled.slice(0,20);
+}
+
+// Génération du quiz
+function generateQuiz(){
+    const quizContainer=document.getElementById("quiz");
+    quizContainer.innerHTML="";
+    const selected=selectRandomQuestions();
+    window.correctAnswers={};
+    selected.forEach((q,index)=>{
+        const qNum=index+1;
+        window.correctAnswers[`q${qNum}`]=q.correctAnswer;
+        quizContainer.innerHTML+=`
+            <div class="question">
+                <div class="question-number">Question ${qNum}/20</div>
+                <div class="question-text">${q.question}</div>
+                <div class="options">
+                    ${q.options.map((opt,i)=>`
+                        <label class="option">
+                            <input type="radio" name="q${qNum}" value="${i}">${String.fromCharCode(97+i)}) ${opt}
+                        </label>`).join("")}
+                </div>
+            </div>`;
+    });
+}
+
+// Vérification réponses
+function checkAnswers(){
+    let score=0;
+    totalQuestions=Object.keys(window.correctAnswers).length;
+    for(let i=1;i<=totalQuestions;i++){
+        const questionName="q"+i;
+        const selected=document.querySelector(`input[name=${questionName}]:checked`);
+        const questionElement=document.querySelectorAll(".question")[i-1];
+        questionElement.classList.remove("correct","incorrect");
+        if(selected){
+            if(parseInt(selected.value)===window.correctAnswers[questionName]){score++;questionElement.classList.add("correct");}
+            else{questionElement.classList.add("incorrect");}
+        }
+    }
+    currentScore=score;
+    document.getElementById("score").textContent=`Score: ${score}/${totalQuestions}`;
+    document.getElementById("score-details").textContent=`Vous avez répondu correctement à ${score} questions sur ${totalQuestions}.`;
+    document.getElementById("save-score-container").style.display="block";
+    document.getElementById("results").style.display="block";
+}
+
+// Sauvegarde score
+function saveScore(){
+    const playerName=CURRENT_USER;
+    if(playerName==="Guest"||!localStorage.getItem("isLoggedIn")){
+        alert("Erreur: Vous devez être connecté pour enregistrer votre score.");
+        document.getElementById("save-score-container").style.display="none"; return;
+    }
+    const scores=JSON.parse(localStorage.getItem(SCORE_STORAGE_KEY))||[];
+    scores.push({
+        name:playerName,
+        score:currentScore,
+        total:totalQuestions,
+        date:new Date().toLocaleDateString("fr-FR"),
+        time:new Date().toLocaleTimeString("fr-FR",{hour:'2-digit',minute:'2-digit'})
+    });
+    scores.sort((a,b)=>((b.score/b.total)-(a.score/a.total)));
+    localStorage.setItem(SCORE_STORAGE_KEY,JSON.stringify(scores.slice(0,10)));
+    alert(`Score enregistré avec succès pour ${playerName}!`);
+    document.getElementById("save-score-container").style.display="none";
+}
+
+// Commentaire
+function getComment(score,total){
+    const pct=(score/total)*100;
+    if(pct>=90) return "Excellent ! 🌟";
+    if(pct>=70) return "Bien joué 🙂";
+    if(pct>=50) return "Peut mieux faire 😐";
+    return "À revoir 🔴";
+}
+
+// Classement
+function showLeaderboard(){
+    const leaderboard=document.getElementById("leaderboard-container");
+    const body=document.getElementById("leaderboard-body");
+    const scores=JSON.parse(localStorage.getItem(SCORE_STORAGE_KEY))||[];
+    document.getElementById("leaderboard-title").textContent=`Mon Classement Personnel (Joueur : ${CURRENT_USER})`;
+    body.innerHTML="";
+    if(scores.length===0) body.innerHTML='<tr><td colspan="5" style="text-align:center;">Aucun score personnel enregistré.</td></tr>';
+    else scores.forEach((s,i)=>{
+        const pct=((s.score/s.total)*100).toFixed(1);
+        const comment=getComment(s.score,s.total);
+        body.innerHTML+=`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.score}/${s.total} (${pct}%)</td><td>${s.date} à ${s.time}</td><td>${comment}</td></tr>`;
+    });
+    document.getElementById("quiz-container").style.display="none";
+    leaderboard.style.display="block";
+}
+
+function hideLeaderboard(){document.getElementById("leaderboard-container").style.display="none";document.getElementById("quiz-container").style.display="block";}
+function clearLeaderboard(){ 
+    if(confirm("Voulez-vous vraiment effacer tout VOTRE classement personnel ?")){
+        localStorage.removeItem(SCORE_STORAGE_KEY);
+        document.getElementById("leaderboard-body").innerHTML='<tr><td colspan="5" style="text-align:center;">Aucun score personnel enregistré.</td></tr>';
+        alert("Votre classement personnel a été effacé.");
+    } 
+}
+
+function resetQuiz(){
+    document.getElementById("quiz").innerHTML="";
+    generateQuiz();
+    document.getElementById("results").style.display="none";
+    document.getElementById("save-score-container").style.display="none";
+}
 </script>
 </body>
 </html>
